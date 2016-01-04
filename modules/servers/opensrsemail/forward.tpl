@@ -9,8 +9,10 @@
 {if $deleteRequired}
 	<p class="alert alert-danger">{$lang.deleterequired}</p>
 {else}
-	{foreach from=$error item=error}
-		<p class="alert alert-danger">{$error}</p>
+	{foreach from=$error item=e}
+		{if $e != ""}
+            <p class="alert alert-danger">{$e}</p>
+       {/if}
 	{/foreach}
 	{if $mailbox}
 		<form action="clientarea.php?action=productdetails&id={$serviceid}&modop=custom&a=mailbox{if !$new}&mailbox={$mailbox.mailbox}&workgroup={$workgroup}{/if}&type={$type}" class="form-stacked" method="post">
@@ -22,7 +24,7 @@
 						<div class="form-group">
 							<label class="control-label" for="mailbox">{$lang.mailboxname}</label>
 							<div class="control">
-								<input class="form-control small" type="text" name="mailbox" value="{$mailbox.mailbox}" /><span class="row-text">@{$domain}</span>
+								<input class="form-control small" type="text" name="mailbox" value="{$mailbox.mailbox}" /><span id="sdomain" class="row-text">@{$domain}</span>
 							</div>
 						</div>
 					{else}
@@ -30,7 +32,7 @@
 							<label class="control-label" for="mailbox">{$lang.mailboxname}</label>
 							<div class="control">
 								<input type="hidden" name="mailbox" value="{$mailbox.mailbox}" />
-								<span class="row-text">{$mailbox.mailbox}@{$domain}</span>
+								<span class="row-text">{$mailbox.mailbox}</span>
 							</div>
 						</div>
 					{/if}
@@ -40,18 +42,6 @@
 							<input class="form-control" type="text" name="forwardEmail" value="{$mailbox.forward_email}" />
 						</div>
 					</div>
-					{if $new}
-						<div class="form-group">
-							<label class="control-label" for="workgroup">{$lang.workgroup}</label>
-							<div class="control">
-								<select class="form-control" name="workgroup">
-									{foreach from=$workgroups item=workgroup}
-										<option value="{$workgroup.workgroup}" {if $workgroup.workgroup == $mailbox.workgroup}selected="true"{/if}>{$workgroup.workgroup}</option>
-									{/foreach}
-								</select>
-							</div>
-						</div>
-					{/if}
 				</div>
 			</div>
 			<button class="btn btn-primary" type="submit">{$lang.save}</button>

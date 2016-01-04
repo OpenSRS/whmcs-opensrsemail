@@ -17,7 +17,7 @@
 	{if $addAlias}
 		<a class="btn btn-success" href="clientarea.php?action=productdetails&id={$serviceid}&modop=custom&a=mailbox&type=alias" title="{$lang.addalias}">{$lang.addalias}</a>
 	{/if}
-	<a class="btn btn-primary" href="clientarea.php?action=productdetails&id={$serviceid}&modaction=workgroups" title="{$lang.editworkgroups}">{$lang.editworkgroups}</a>
+
 </div>
 {if $addedMailbox}
 	<p class="alert alert-success">{$lang.mailboxaddsuccess}</p>
@@ -34,8 +34,10 @@
 {if $deleteSuccess}
 	<p class="alert alert-success">{$lang.mailboxdeletesuccess}</p>
 {/if}
-{foreach from=$error item=error}
-	<p class="alert alert-error">{$error}</p>
+{foreach from=$error item=e}
+	 {if $e != ""}
+            <p class="alert alert-danger">{$e}</p>
+     {/if}
 {/foreach}
 {if count($mailboxes)}
 	<table class="table table-framed table-striped">
@@ -43,7 +45,6 @@
 			<tr>
 				<th>{$lang.name}</th>
 				<th>{$lang.type}</th>
-				<th>{$lang.workgroup}</th>
 				<th class="button-column"></th>
 				<th class="button-column"></th>
 			</tr>
@@ -53,7 +54,6 @@
 				<tr>
 					<td>{$mailbox.mailbox}</td>
 					<td>{$mailbox.uctype}</td>
-					<td>{$mailbox.workgroup}</td>
 					<td>
 						{if $mailbox.type != "alias"}
 							<a class="btn btn-primary" href="clientarea.php?action=productdetails&id={$serviceid}&modop=custom&a=mailbox&mailbox={$mailbox.mailbox}&workgroup={$mailbox.workgroup}&type={$mailbox.type}" title="{$lang.edit}">{$lang.edit}</a>

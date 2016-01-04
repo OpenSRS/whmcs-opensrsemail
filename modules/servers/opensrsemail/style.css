@@ -11,3 +11,17 @@ input[type='text'].small.form-control{
 .button-column {
 	width: 0px;
 }
+
+#random {display: none;}
+
+.table-framed {
+    border: 1px solid #DDD;
+    border-collapse: separate;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+table.table-striped tr td {
+    vertical-align: middle;
+    text-align: left;
+}

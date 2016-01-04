@@ -9,8 +9,10 @@
 {if $deleteRequired}
 	<p class="alert alert-danger">{$lang.deleterequired}</p>
 {else}
-	{foreach from=$error item=error}
-		<p class="alert alert-danger">{$error}</p>
+	{foreach from=$error item=e}
+       {if $e != ""}
+		    <p class="alert alert-danger">{$e}</p>
+       {/if}
 	{/foreach}
 	{if $mailbox}
 		<form action="clientarea.php?action=productdetails&id={$serviceid}&modop=custom&a=mailbox{if !$new}&mailbox={$mailbox.mailbox}&workgroup={$workgroup}{/if}&type={$type}" class="form-stacked" method="post">
@@ -23,7 +25,7 @@
 						<div class="form-group">
 							<label class="control-label" for="mailbox">{$lang.mailboxname}</label>
 							<div class="control">
-								<input class="form-control small" type="text" name="mailbox" value="{$mailbox.mailbox}" /><span class="row-text">@{$domain}</span>
+								<input class="form-control small" type="text" name="mailbox" value="{$mailbox.mailbox}" /><span id="sdomain" class="row-text">@{$domain}</span>
 							</div>
 						</div>
 					{else}
@@ -31,33 +33,29 @@
 							<label class="control-label" for="mailbox">{$lang.mailboxname}</label>
 							<div class="control">
 								<input type="hidden" name="mailbox" value="{$mailbox.mailbox}" />
-								<span class="row-text">{$mailbox.mailbox}@{$domain}</span>
+                                <!-- <span class="row-text">{$mailbox.mailbox}@{$domain}</span> -->
+								<span class="row-text">{$mailbox.mailbox}</span>
 							</div>
 						</div>
 					{/if}
 					<div class="form-group">
 						<label class="control-label" for="password">{$lang.password} {if !$new}{$lang.blankfornochange}{/if}</label>
 						<div class="control">
-							<input class="form-control" type="password" name="password" />
+							<input class="form-control" type="password" name="password" style="margin-bottom: 10px"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label" for="passwordConfirm">{$lang.confirmpassword}</label>
 						<div class="control">
-							<input class="form-control" type="password" name="passwordConfirm" />
+							<input class="form-control" type="password" name="passwordConfirm" style="margin-bottom: 20px"/>
+                            <input class="form-control" id="random" for="generatedPassword" style="margin-bottom: 10px"/>
 						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label" for="workgroup">{$lang.workgroup}</label>
-						<div class="control">
-							<select class="form-control" name="workgroup">
-								{foreach from=$workgroups item=workgroup}
-									<option value="{$workgroup.workgroup}" {if $workgroup.workgroup == $mailbox.workgroup}selected="true"{/if}>{$workgroup.workgroup}</option>
-								{/foreach}
-							</select>
-						</div>
-					</div>
-				</div>
+                         <div class="control">
+                            <button class="btn btn-primary" type="button" id="generatePassword" name="generatePassword">Generate Password</button>
+					     </div>
+				    </div>
+                 </div>
+                <BR/>
 				<div class="col-sm-6">
 					<h3>{$lang.userinfo}</h3>
 					<div class="form-group">
